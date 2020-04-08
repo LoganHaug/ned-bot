@@ -1,7 +1,6 @@
 """ned_bot, the boi himself
 
 Features:
-    - Welcomes other users to the neighborhood
     - Reacts with a "D" emoji to messages that already have "N" and "E" emojis
     - Tells people to stop swearing
 """
@@ -23,11 +22,6 @@ NED_BOT = discord.Client()
 @NED_BOT.event
 async def on_ready():
     print(f'{NED_BOT.user} has connected to Discord')
-
-@NED_BOT.event
-async def on_member_join(member):
-    # general_channel = discord.utils.find()
-
 
 # Essentially just bad code that does the second feature
 @NED_BOT.event
