@@ -14,8 +14,6 @@ with open('bot.yml', 'r') as file:
     BOT_YAML = yaml.load(file, Loader=yaml.SafeLoader)
 with open('bad_word_list.yml', 'r') as file:
     BAD_WORD_LIST = yaml.load(file, Loader=yaml.SafeLoader)
-# Grabs the guild name from .env
-GUILD = BOT_YAML['GUILD']
 # Initializes the discord bot
 NED_BOT = discord.Client()
 # Prints that the bot is ready
