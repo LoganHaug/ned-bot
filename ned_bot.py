@@ -6,6 +6,7 @@ Features:
 """
 # External imports
 import discord
+import random
 import re
 import yaml
 # No internal imports
@@ -49,7 +50,7 @@ async def on_message(message):
         pattern = re.compile(word.lower())
         if pattern.search(message_content) is not None:
             channel = NED_BOT.get_channel(message.channel.id)
-            await channel.send(BOT_YAML['NO_SWEAR_TEXT'])
+            await channel.send(random.choice(BOT_YAML['NO_SWEAR_TEXT']))
             break
 
 # Stores the API token and the name of the guild the bot is in
