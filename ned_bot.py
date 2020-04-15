@@ -6,6 +6,7 @@ Features:
 """
 # External imports
 import discord
+import logging
 import random
 import re
 import yaml
@@ -45,13 +46,21 @@ async def on_raw_reaction_add(payload):
 # Swear word checker
 @NED_BOT.event
 async def on_message(message):
+    # Converts the message content to lowercase
     message_content = message.content.lower()
-    for word in BAD_WORD_LIST['swearwords']:
-        pattern = re.compile(word.lower())
-        if pattern.search(message_content) is not None:
-            channel = NED_BOT.get_channel(message.channel.id)
-            await channel.send(random.choice(BOT_YAML['NO_SWEAR_TEXT']))
-            break
+    # Doesn't check the bot's messages for swearwords
+    if message.author.name == 'Ned' and message.author.discriminator == '7668':
+        pass
+    else:
+        # Checks each swearword for matches within the message
+        for word in BAD_WORD_LIST['swearwords']:
+            # Converts the swearword example to lowercase
+            pattern = re.compile('(^| )' + word.lower() + '($| )')
+            # If the pattern matches send a message
+            if pattern.search(message_content) is not None:
+                channel = NED_BOT.get_channel(message.channel.id)
+                await channel.send(random.choice(BOT_YAML['NO_SWEAR_TEXT']))
+                break
 
 # Stores the API token and the name of the guild the bot is in
 TOKEN = BOT_YAML['TOKEN']
