@@ -12,6 +12,11 @@ import re
 import yaml
 # No internal imports
 
+# Setup the logger
+
+logging.basicConfig(filename='discord.log', filemode='a', format='%(asctime)s %(message)s', level='ERROR')
+
+
 # Loads the yaml file
 with open('bot.yml', 'r') as file:
     BOT_YAML = yaml.load(file, Loader=yaml.SafeLoader)
@@ -43,6 +48,7 @@ async def on_raw_reaction_add(payload):
                     if message.reactions[reaction + 1].emoji == '🇪':
                         # Complete the bot's name
                         await message.add_reaction('🇩')
+                        logging.error('Spelled my name :)')
 # Swear word checker
 @NED_BOT.event
 async def on_message(message):
@@ -59,6 +65,8 @@ async def on_message(message):
             # If the pattern matches send a message
             if pattern.search(message_content) is not None:
                 channel = NED_BOT.get_channel(message.channel.id)
+                # Use error warning level, otherwise discord.py goes gamer mode
+                logging.error('Told ' + message.author.name + ' to watch their language')
                 await channel.send(random.choice(BOT_YAML['NO_SWEAR_TEXT']))
                 break
 
