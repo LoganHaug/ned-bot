@@ -37,7 +37,7 @@ async def on_ready():
 @NED_BOT.event
 async def on_raw_reaction_add(payload):
     # Checks if the emoji is an "E" emoji
-    if payload.emoji.name == '🇪':
+    if payload.emoji.name == '🇪' or payload.emoji.name == '3️⃣':
         # Gets the channel object from the channel id
         channel = NED_BOT.get_channel(payload.channel_id)
         # Gets the message that the reaction was made in
