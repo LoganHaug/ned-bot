@@ -22,6 +22,10 @@ with open('bot.yml', 'r') as file:
     BOT_YAML = yaml.load(file, Loader=yaml.SafeLoader)
 with open('bad_word_list.yml', 'r') as file:
     BAD_WORD_LIST = yaml.load(file, Loader=yaml.SafeLoader)
+# Flags punctuation characters
+PUNCTUATION_CHARS = ["\'", '\"', '\:', '\;', '\/', '\?', '\.', '\>', '\,', '\<',
+'\{', '\[', '\]', '\}', '\\', '\|', '\+', '\=', '\-', '\_', '\!', '\@', '\#',
+'\$', '\%', '\^', '\&', '\*', '\(', '\)', '^', '$', ' ']
 # Initializes the discord bot
 NED_BOT = discord.Client()
 # Prints that the bot is ready
@@ -55,7 +59,14 @@ async def on_message(message):
         # Checks each swearword for matches within the message
         for word in BAD_WORD_LIST['swearwords']:
             # Converts the swearword example to lowercase
-            pattern = re.compile('(^| )' + word.lower() + '($| )')
+            punctuation_characters_group = '('
+            for character in PUNCTUATION_CHARS:
+                if PUNCTUATION_CHARS.index(character) != len(PUNCTUATION_CHARS) - 1:
+                    punctuation_characters_group += character + '|'
+                    continue
+                punctuation_characters_group += character + ')'
+            # Compiles the overtuned regex
+            pattern = re.compile(punctuation_characters_group + word.lower() + punctuation_characters_group)
             # If the pattern matches send a message
             if pattern.search(message_content) is not None:
                 channel = NED_BOT.get_channel(message.channel.id)
