@@ -25,7 +25,7 @@ with open('bad_word_list.yml', 'r') as file:
 # Flags punctuation characters
 PUNCTUATION_CHARS = ["\'", '\"', '\:', '\;', '\/', '\?', '\.', '\>', '\,', '\<',
 '\{', '\[', '\]', '\}', '\\', '\|', '\+', '\=', '\-', '\_', '\!', '\@', '\#',
-'\$', '\%', '\^', '\&', '\*', '\(', '\)', '^', '$', ' ']
+'\$', '\%', '\^', '\&', '\*', '\(', '\)', '^', '$', '\s']
 
 PUNCTUATION_PATTERN = f"({'|'.join(PUNCTUATION_CHARS)})"
 SWEAR_WORDS_PATTERN = '|'.join(map(str.lower, BAD_WORD_LIST['swearwords']))
