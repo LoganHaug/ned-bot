@@ -60,11 +60,11 @@ async def on_message(message):
     message_content = message.content.lower()
     # Doesn't check the bot's messages for swearwords
     if message.author != NED_BOT.user:
-            if SWEAR_WORD_REGEX.search(message_content) is not None:
-                channel = NED_BOT.get_channel(message.channel.id)
-                # Use error warning level, otherwise discord.py goes gamer mode
-                logging.error('Told ' + message.author.name + ' to watch their language')
-                await channel.send(random.choice(BOT_YAML['NO_SWEAR_TEXT']))
+        if SWEAR_WORD_REGEX.search(message_content) is not None:
+            channel = NED_BOT.get_channel(message.channel.id)
+            # Use error warning level, otherwise discord.py goes gamer mode
+            logging.error('Told ' + message.author.name + ' to watch their language')
+            await channel.send(random.choice(BOT_YAML['NO_SWEAR_TEXT']))
 
 # Stores the API token and the name of the guild the bot is in
 TOKEN = BOT_YAML['TOKEN']
