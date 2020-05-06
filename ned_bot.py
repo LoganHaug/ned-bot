@@ -41,18 +41,22 @@ async def on_ready():
 # Essentially just bad code that does the second feature
 @NED_BOT.event
 async def on_raw_reaction_add(payload):
-    # Checks if the emoji is an "E" emoji
-    if payload.emoji.name in ['🇪', '3️⃣']:
+    # Checks if the emoji is an "E" emoji and if the member is not itself
+    if payload.emoji.name in ['🇪', '3️⃣'] and payload.member.id != NED_BOT.user.id:
         # Gets the channel object from the channel id
         channel = NED_BOT.get_channel(payload.channel_id)
         # Gets the message that the reaction was made in
         message = await channel.fetch_message(payload.message_id)
-        for reaction in message.reactions:
-            if reaction.emoji == '🇳':
-                await message.remove_reaction('🇷')
-                await message.add_reaction('🇩')
-                logging.error('Spelled my name :)')
-                break
+        reaction_index = 0
+        reactions = message.reactions
+        while reaction_index < len(reactions):
+            await message.clear_reaction(reactions[reaction_index].emoji)
+            reaction_index += 1
+        ned_emojis = ['🇳', '🇪', '🇩']
+        for emoji in ned_emojis:
+            await message.add_reaction(emoji)
+        logging.error('Spelled my name :)')
+
 # Swear word checker
 @NED_BOT.event
 async def on_message(message):
