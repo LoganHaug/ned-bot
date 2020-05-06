@@ -44,6 +44,7 @@ async def on_raw_reaction_add(payload):
         message = await channel.fetch_message(payload.message_id)
         for reaction in message.reactions:
             if reaction.emoji == '🇳':
+                await message.remove_reaction('🇷')
                 await message.add_reaction('🇩')
                 logging.error('Spelled my name :)')
                 break
